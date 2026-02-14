@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import os
 import sys
-from functools import lru_cache
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from .api import PlatformDirsABC
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+
+# Not exposed by CPython; defined in the Windows SDK (shlobj_core.h)
+_KF_FLAG_DONT_VERIFY: Final[int] = 0x00004000
 
 
 class Windows(PlatformDirsABC):
@@ -87,9 +89,23 @@ class Windows(PlatformDirsABC):
         return self.user_data_dir
 
     @property
+    def site_state_dir(self) -> str:
+        """:return: state directory shared by users, same as `site_data_dir`"""
+        return self.site_data_dir
+
+    @property
     def user_log_dir(self) -> str:
         """:return: log directory tied to the user, same as `user_data_dir` if not opinionated else ``Logs`` in it"""
         path = self.user_data_dir
+        if self.opinion:
+            path = os.path.join(path, "Logs")  # noqa: PTH118
+            self._optionally_create_directory(path)
+        return path
+
+    @property
+    def site_log_dir(self) -> str:
+        """:return: log directory shared by users, same as `site_data_dir` if not opinionated else ``Logs`` in it"""
+        path = self.site_data_dir
         if self.opinion:
             path = os.path.join(path, "Logs")  # noqa: PTH118
             self._optionally_create_directory(path)
@@ -124,6 +140,11 @@ class Windows(PlatformDirsABC):
     def user_desktop_dir(self) -> str:
         """:return: desktop directory tied to the user, e.g. ``%USERPROFILE%\\Desktop``"""
         return os.path.normpath(get_win_folder("CSIDL_DESKTOPDIRECTORY"))
+
+    @property
+    def user_bin_dir(self) -> str:
+        """:return: bin directory tied to the user, e.g. ``%LOCALAPPDATA%\\Programs``"""
+        return os.path.normpath(os.path.join(get_win_folder("CSIDL_LOCAL_APPDATA"), "Programs"))  # noqa: PTH118
 
     @property
     def user_runtime_dir(self) -> str:
@@ -271,7 +292,7 @@ def get_win_folder_via_ctypes(csidl_name: str) -> str:
     ole32.CLSIDFromString(folder_guid, byref(guid))
 
     path_ptr = wintypes.LPWSTR()
-    shell32.SHGetKnownFolderPath(byref(guid), 0, None, byref(path_ptr))
+    shell32.SHGetKnownFolderPath(byref(guid), _KF_FLAG_DONT_VERIFY, None, byref(path_ptr))
     result = path_ptr.value
     ole32.CoTaskMemFree(path_ptr)
 
@@ -303,7 +324,21 @@ def _pick_get_win_folder() -> Callable[[str], str]:
         return get_win_folder_from_registry
 
 
-get_win_folder = lru_cache(maxsize=None)(_pick_get_win_folder())
+_resolve_win_folder = _pick_get_win_folder()
+
+
+def get_win_folder(csidl_name: str) -> str:
+    """
+    Get a Windows folder path, checking for ``WIN_PD_OVERRIDE_*`` environment variable overrides first.
+
+    For example, ``CSIDL_LOCAL_APPDATA`` can be overridden by setting ``WIN_PD_OVERRIDE_LOCAL_APPDATA``.
+
+    """
+    env_var = f"WIN_PD_OVERRIDE_{csidl_name.removeprefix('CSIDL_')}"
+    if override := os.environ.get(env_var, "").strip():
+        return override
+    return _resolve_win_folder(csidl_name)
+
 
 __all__ = [
     "Windows",
