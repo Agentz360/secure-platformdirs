@@ -136,6 +136,26 @@ class _MacOSDefaults(PlatformDirsABC):  # noqa: PLR0904
         return os.path.expanduser("~/.local/bin")  # noqa: PTH111
 
     @property
+    def site_bin_dir(self) -> str:
+        """:return: bin directory shared by users, e.g. ``/usr/local/bin``"""
+        return "/usr/local/bin"
+
+    @property
+    def user_applications_dir(self) -> str:
+        """:return: applications directory tied to the user, e.g. ``~/Applications``"""
+        return os.path.expanduser("~/Applications")  # noqa: PTH111
+
+    @property
+    def _site_applications_dirs(self) -> list[str]:
+        return ["/Applications"]
+
+    @property
+    def site_applications_dir(self) -> str:
+        """:return: applications directory shared by users, e.g. ``/Applications``"""
+        dirs = self._site_applications_dirs
+        return os.pathsep.join(dirs) if self.multipath else dirs[0]
+
+    @property
     def user_runtime_dir(self) -> str:
         """:return: runtime directory tied to the user, e.g. ``~/Library/Caches/TemporaryItems/$appname/$version``"""
         return self._append_app_name_and_version(os.path.expanduser("~/Library/Caches/TemporaryItems"))  # noqa: PTH111

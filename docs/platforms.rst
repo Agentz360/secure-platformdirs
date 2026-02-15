@@ -5,12 +5,18 @@ Platform details
 This page describes the default paths for each platform and any platform-specific behavior.
 
 All examples below assume ``appname="SuperApp"`` and ``appauthor="Acme"`` unless stated otherwise.
-
 Default paths
 -------------
 
+User directories
+~~~~~~~~~~~~~~~~
+
+These are user-specific (and, generally, user-writeable) directories.
+
 ``user_data_dir``
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User data directory`
 
 .. list-table::
    :widths: 20 80
@@ -25,7 +31,9 @@ Default paths
      - ``/data/data/<pkg>/files/SuperApp``
 
 ``user_config_dir``
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User config directory`
 
 .. list-table::
    :widths: 20 80
@@ -40,7 +48,9 @@ Default paths
      - ``/data/data/<pkg>/shared_prefs/SuperApp``
 
 ``user_cache_dir``
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User cache directory`
 
 .. list-table::
    :widths: 20 80
@@ -55,7 +65,9 @@ Default paths
      - ``/data/data/<pkg>/cache/SuperApp``
 
 ``user_state_dir``
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User state directory`
 
 .. list-table::
    :widths: 20 80
@@ -70,7 +82,9 @@ Default paths
      - ``/data/data/<pkg>/files/SuperApp``
 
 ``user_log_dir``
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User log directory`
 
 .. list-table::
    :widths: 20 80
@@ -84,38 +98,10 @@ Default paths
    * - Android
      - ``/data/data/<pkg>/cache/SuperApp/log``
 
-``site_state_dir``
-~~~~~~~~~~~~~~~~~~
-
-.. list-table::
-   :widths: 20 80
-
-   * - Linux
-     - ``/var/lib/SuperApp``
-   * - macOS
-     - ``/Library/Application Support/SuperApp``
-   * - Windows
-     - ``C:\ProgramData\Acme\SuperApp``
-   * - Android
-     - ``/data/data/<pkg>/files/SuperApp``
-
-``site_log_dir``
-~~~~~~~~~~~~~~~~
-
-.. list-table::
-   :widths: 20 80
-
-   * - Linux
-     - ``/var/log/SuperApp``
-   * - macOS
-     - ``/Library/Logs/SuperApp``
-   * - Windows
-     - ``C:\ProgramData\Acme\SuperApp\Logs``
-   * - Android
-     - ``/data/data/<pkg>/cache/SuperApp/log``
-
 ``user_runtime_dir``
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User runtime directory`
 
 .. list-table::
    :widths: 20 80
@@ -129,68 +115,55 @@ Default paths
    * - Android
      - ``/data/data/<pkg>/cache/SuperApp/tmp``
 
-``site_data_dir``
-~~~~~~~~~~~~~~~~~
+``user_applications_dir``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User applications directory`
 
 .. list-table::
    :widths: 20 80
 
    * - Linux
-     - ``/usr/local/share/SuperApp``
+     - ``~/.local/share/applications``
    * - macOS
-     - ``/Library/Application Support/SuperApp``
+     - ``~/Applications``
    * - Windows
-     - ``C:\ProgramData\Acme\SuperApp``
+     - ``C:\Users\<User>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs``
    * - Android
-     - ``/data/data/<pkg>/files/SuperApp``
+     - same as ``user_data_dir``
 
-``site_config_dir``
-~~~~~~~~~~~~~~~~~~~
+.. note::
+
+   This property does not append ``appname`` or ``version``. It returns the shared
+   applications directory where ``.desktop`` files (Linux), app bundles (macOS), or
+   Start Menu shortcuts (Windows) are placed.
+
+``user_bin_dir``
+^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User binary directory`
 
 .. list-table::
    :widths: 20 80
 
    * - Linux
-     - ``/etc/xdg/SuperApp``
+     - ``~/.local/bin``
    * - macOS
-     - ``/Library/Application Support/SuperApp``
+     - ``~/.local/bin``
    * - Windows
-     - ``C:\ProgramData\Acme\SuperApp``
+     - ``C:\Users\<User>\AppData\Local\Programs``
    * - Android
-     - ``/data/data/<pkg>/shared_prefs/SuperApp``
+     - ``/data/data/<pkg>/files/bin``
 
-``site_cache_dir``
-~~~~~~~~~~~~~~~~~~
+.. note::
 
-.. list-table::
-   :widths: 20 80
-
-   * - Linux
-     - ``/var/cache/SuperApp``
-   * - macOS
-     - ``/Library/Caches/SuperApp``
-   * - Windows
-     - ``C:\ProgramData\Acme\SuperApp\Cache``
-   * - Android
-     - ``/data/data/<pkg>/cache/SuperApp``
-
-``site_runtime_dir``
-~~~~~~~~~~~~~~~~~~~~
-
-.. list-table::
-   :widths: 20 80
-
-   * - Linux
-     - ``/run/SuperApp``
-   * - macOS
-     - ``~/Library/Caches/TemporaryItems/SuperApp``
-   * - Windows
-     - ``C:\Users\<User>\AppData\Local\Temp\Acme\SuperApp``
-   * - Android
-     - ``/data/data/<pkg>/cache/SuperApp/tmp``
+   This property does not append ``appname`` or ``version``. It returns the directory
+   where user-installed executables and scripts are placed.
 
 ``user_documents_dir``
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User documents directory`
 
 .. list-table::
    :widths: 20 80
@@ -205,7 +178,9 @@ Default paths
      - ``/storage/emulated/0/Documents``
 
 ``user_downloads_dir``
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User downloads directory`
 
 .. list-table::
    :widths: 20 80
@@ -220,7 +195,9 @@ Default paths
      - ``/storage/emulated/0/Downloads``
 
 ``user_pictures_dir``
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User pictures directory`
 
 .. list-table::
    :widths: 20 80
@@ -235,7 +212,9 @@ Default paths
      - ``/storage/emulated/0/Pictures``
 
 ``user_videos_dir``
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User videos directory`
 
 .. list-table::
    :widths: 20 80
@@ -250,7 +229,9 @@ Default paths
      - ``/storage/emulated/0/DCIM/Camera``
 
 ``user_music_dir``
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User music directory`
 
 .. list-table::
    :widths: 20 80
@@ -265,7 +246,9 @@ Default paths
      - ``/storage/emulated/0/Music``
 
 ``user_desktop_dir``
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:User desktop directory`
 
 .. list-table::
    :widths: 20 80
@@ -278,6 +261,162 @@ Default paths
      - ``C:\Users\<User>\Desktop``
    * - Android
      - ``/storage/emulated/0/Desktop``
+
+Shared directories
+~~~~~~~~~~~~~~~~~~
+
+These are system-wide (and, generally, read-only) directories.
+
+``site_data_dir``
+^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared data directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/usr/local/share/SuperApp``
+   * - macOS
+     - ``/Library/Application Support/SuperApp``
+   * - Windows
+     - ``C:\ProgramData\Acme\SuperApp``
+   * - Android
+     - ``/data/data/<pkg>/files/SuperApp``
+
+``site_config_dir``
+^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared config directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/etc/xdg/SuperApp``
+   * - macOS
+     - ``/Library/Application Support/SuperApp``
+   * - Windows
+     - ``C:\ProgramData\Acme\SuperApp``
+   * - Android
+     - ``/data/data/<pkg>/shared_prefs/SuperApp``
+
+``site_cache_dir``
+^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared cache directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/var/cache/SuperApp``
+   * - macOS
+     - ``/Library/Caches/SuperApp``
+   * - Windows
+     - ``C:\ProgramData\Acme\SuperApp\Cache``
+   * - Android
+     - ``/data/data/<pkg>/cache/SuperApp``
+
+``site_state_dir``
+^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared state directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/var/lib/SuperApp``
+   * - macOS
+     - ``/Library/Application Support/SuperApp``
+   * - Windows
+     - ``C:\ProgramData\Acme\SuperApp``
+   * - Android
+     - ``/data/data/<pkg>/files/SuperApp``
+
+``site_log_dir``
+^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared log directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/var/log/SuperApp``
+   * - macOS
+     - ``/Library/Logs/SuperApp``
+   * - Windows
+     - ``C:\ProgramData\Acme\SuperApp\Logs``
+   * - Android
+     - ``/data/data/<pkg>/cache/SuperApp/log``
+
+``site_runtime_dir``
+^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared runtime directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/run/SuperApp``
+   * - macOS
+     - ``~/Library/Caches/TemporaryItems/SuperApp``
+   * - Windows
+     - ``C:\Users\<User>\AppData\Local\Temp\Acme\SuperApp``
+   * - Android
+     - ``/data/data/<pkg>/cache/SuperApp/tmp``
+
+``site_applications_dir``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared applications directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/usr/share/applications``
+   * - macOS
+     - ``/Applications``
+   * - Windows
+     - ``C:\ProgramData\Microsoft\Windows\Start Menu\Programs``
+   * - Android
+     - same as ``user_applications_dir``
+
+.. note::
+
+   This property does not append ``appname`` or ``version``. It returns the system-wide
+   applications directory where ``.desktop`` files (Linux), app bundles (macOS), or
+   Start Menu shortcuts (Windows) are installed for all users.
+
+``site_bin_dir``
+^^^^^^^^^^^^^^^^
+
+See also: :ref:`api:Shared binary directory`
+
+.. list-table::
+   :widths: 20 80
+
+   * - Linux
+     - ``/usr/local/bin``
+   * - macOS
+     - ``/usr/local/bin``
+   * - Windows
+     - ``C:\ProgramData\bin``
+   * - Android
+     - Same as ``user_bin_dir``
+
+.. note::
+
+   This property does not append ``appname`` or ``version``. It returns the directory
+   where system-wide executables and scripts are placed. On Unix/Linux, this follows
+   the `FHS 3.0 <https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html>`_
+   standard for locally installed software. On Windows, it mirrors the ``site_data_dir``
+   pattern using ``%ProgramData%``, following the precedent set by
+   `Chocolatey <https://docs.chocolatey.org/en-us/choco/setup>`_.
 
 macOS
 -----
@@ -313,9 +452,6 @@ Key behaviors:
   which syncs across machines in a Windows domain
 - **OPINION**: ``user_cache_dir`` appends ``\Cache``, ``user_log_dir`` appends ``\Logs``
 
-Environment variable overrides
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Unlike Linux/macOS where ``XDG_*`` variables are a platform standard, Windows has no built-in
 convention for overriding folder locations at the application level. To fill this gap,
 ``platformdirs`` checks ``WIN_PD_OVERRIDE_*`` environment variables before querying the Shell
@@ -349,6 +485,8 @@ The override variable name is ``WIN_PD_OVERRIDE_`` followed by the CSIDL suffix:
      - Music
    * - ``WIN_PD_OVERRIDE_DESKTOPDIRECTORY``
      - Desktop
+   * - ``WIN_PD_OVERRIDE_PROGRAMS``
+     - Applications (Start Menu Programs)
 
 Example — redirect cache to a separate drive:
 
